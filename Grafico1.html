@@ -1,11 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Grafico 1</h1>
-</body>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gráfico 1 - Lenguajes</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .formulario {
+        margin: 20px 0;
+      }
+
+      .campo {
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: inline-block;
+        width: 120px;
+        font-weight: bold;
+      }
+
+      input {
+        padding: 5px;
+        width: 100px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #686de0;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Gráfico 1: Lenguajes de Programación</h1>
+
+    <div class="formulario">
+      <div class="campo">
+        <label for="python">Python:</label>
+        <input type="number" id="python" />
+      </div>
+
+      <div class="campo">
+        <label for="javascript">JavaScript:</label>
+        <input type="number" id="javascript" />
+      </div>
+
+      <div class="campo">
+        <label for="java">Java:</label>
+        <input type="number" id="java" />
+      </div>
+
+      <div class="campo">
+        <label for="csharp">C#:</label>
+        <input type="number" id="cchar" />
+      </div>
+
+      <div class="campo">
+        <label for="php">PHP:</label>
+        <input type="number" id="php" />
+      </div>
+    </div>
+
+    <button id="button">Actualizar Gráfico</button>
+
+    <div>
+      <canvas id="lienzo"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const lienzo = document.getElementById("lienzo");
+        const btnActualizar = document.getElementById("button");
+
+        function actualizarGrafico() {
+          const valorPython = document.getElementById("python").value;
+          const valorJavaScript = document.getElementById("javascript").value;
+          const valorJava = document.getElementById("java").value;
+          const valorCSharp = document.getElementById("cchar").value;
+          const valorPHP = document.getElementById("php").value;
+
+          grafico.data.datasets[0].data = [
+            valorPython,
+            valorJavaScript,
+            valorJava,
+            valorCSharp,
+            valorPHP
+          ];
+          
+          grafico.update();
+        }
+
+        const grafico = new Chart(lienzo, {
+          type: "bar",
+          data: {
+            labels: ["Python", "JavaScript", "Java", "C#", "PHP"],
+            datasets: [
+              {
+                label: "Cantidad",
+                data: [0, 0, 0, 0, 0],
+                backgroundColor: "rgba(104, 109, 224, 0.5)",
+                borderWidth: 2,
+              },
+            ],
+          },
+        });
+
+        console.log(grafico.data);
+        btnActualizar.addEventListener("click", actualizarGrafico);
+      });
+    </script>
+  </body>
 </html>

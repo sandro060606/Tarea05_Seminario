@@ -1,11 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Grafico 2</h1>
-</body>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gráfico 2 - Ventas Semanales</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #686de0;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <h1>Gráfico 2: Ventas Semanales</h1>
+
+    <button id="button">Cargar Datos desde JSON</button>
+
+    <div>
+      <canvas id="lienzo"></canvas>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const lienzo = document.getElementById("lienzo");
+        const btnCargar = document.getElementById("button");
+
+        const grafico = new Chart(lienzo, {
+          type: "bar",
+          data: {
+            labels: [
+              "Lunes",
+              "Martes",
+              "Miércoles",
+              "Jueves",
+              "Viernes",
+              "Sábado",
+              "Domingo",
+            ],
+            datasets: [
+              {
+                label: "Cantidad",
+                data: [0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: "rgba(246, 229, 141, 0.5)",
+                borderWidth: 2,
+              },
+            ],
+          },
+        });
+
+        function cargarDatosJSON() {
+          // Datos que vienen desde JSON
+          const datosJSON = [
+            { dia: "Lunes", produccion: 500 },
+            { dia: "Martes", produccion: 200 },
+            { dia: "Miércoles", produccion: 300 },
+            { dia: "Jueves", produccion: 800 },
+            { dia: "Viernes", produccion: 300 },
+            { dia: "Sábado", produccion: 600 },
+            { dia: "Domingo", produccion: 100 },
+          ];
+
+          grafico.data.datasets[0].data = datosJSON.map((fila) => fila.produccion);
+          grafico.update();
+
+          console.log(grafico.data);
+        }
+
+        btnCargar.addEventListener("click", cargarDatosJSON);
+      });
+    </script>
+  </body>
 </html>
