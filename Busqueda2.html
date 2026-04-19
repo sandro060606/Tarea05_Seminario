@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Busqueda Empresas</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <form id="formulario">
+          <h1>Consulta API - RUC</h1>
+          <input
+            type="text"
+            id="ruc"
+            placeholder="Ingrese el RUC de la Empresa"
+            maxlength="11"
+            required
+          />
+          <small>Ejemplo: 20601030013</small>
+          <button type="submit" id="btnBuscar">Buscar Info del API</button>
+        </form>
+        <!-- Aqui se muestran los resultados de la consulta -->
+        <div id="resultados"></div>
+      </div>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const $ = (selector) => document.getElementById(selector);
+
+        const formulario = $("formulario");
+        const ruc = $("ruc");
+        const btnBuscar = $("btnBuscar");
+        const resultados = $("resultados");
+
+        const fetchInfo = (ruc) => {
+          return fetch(`http://localhost:3000/api/ruc/${ruc}`)
+            .then((res) => res.json())
+            .catch((error) => console.error(error));
+        };
+
+        formulario.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const { value } = ruc;
+          if (!value) return;
+
+          btnBuscar.setAttribute("disabled", "");
+          btnBuscar.setAttribute("aria-busy", "true");
+
+          const rucinfo = await fetchInfo(value);
+
+          if (rucinfo) {
+            resultados.innerHTML = JSON.stringify(rucinfo, null, 2);
+          }
+
+          btnBuscar.removeAttribute("disabled");
+          btnBuscar.removeAttribute("aria-busy");
+        });
+      });
+    </script>
+  </body>
+</html>
